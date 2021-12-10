@@ -29,18 +29,26 @@ namespace Clinic_Management_System_8
 
         public IConfiguration Configuration { get; }
 
-        
+        // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
 
-           
+            //--- add dependency injection for CMSDBContext ---//
             services.AddDbContext<CMSContext>(
                 item => item.UseSqlServer(Configuration.GetConnectionString("ConStr"))
                 );
 
-           
-          
+            //--- add dependency injection ---//
+            services.AddScoped<IPatient, Patient>();
+
+            services.AddScoped<ITestReport, TestReport>();
+            services.AddScoped<IPrescription, Prescription>();
+            services.AddScoped<IAppointment, AppointmentRepo>();
+            services.AddScoped<IPayment, Payment>();
+            services.AddScoped<IEmlpoyeeRepo, EmployeeRepo>();
+            services.AddScoped<IRole, Role>();
+            services.AddScoped<IDepartment, Department>();
             services.AddScoped<ILogin, LoginRepo>();
             services.AddScoped<IAnnouncement, Repository.Announcement>();
             services.AddScoped<IDoctorNotesRepo, DoctorNotesRepo>();
@@ -57,7 +65,7 @@ namespace Clinic_Management_System_8
                     }
                 );
 
-        
+            //--- register a JWT authentication schema ---//
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(options =>
                 {
@@ -77,6 +85,7 @@ namespace Clinic_Management_System_8
             services.AddMvc();
         }
 
+        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             app.UseCors(options =>
