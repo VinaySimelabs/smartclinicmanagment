@@ -2,6 +2,7 @@
   <div class="container-fluid py-4">
     <h1 id="heading" class="mb-0 heading pt-4">ANNOUNCEMENT</h1>
     <h1 id="green" class="mb-0 heading pt-4">&ensp;& EVENTS</h1>
+
     <!--search-->
     <div class="form-outline">
       <br />
@@ -19,7 +20,12 @@
           <thead class="thead-light">
             <tr>
               <td colspan="5">
+                <input
+                  class="form-control"
+                  type="text"
+                  placeholder="Search....."
 
+                />
               </td>
             </tr>
             <tr>
@@ -49,10 +55,6 @@
           </tbody>
         </table>
         <div class="footer">
-          <!--paginatiom control-->
-          <pagination-controls
-            (pageChange)="page = $event"
-          ></pagination-controls>
         </div>
       </div>
     </div>
